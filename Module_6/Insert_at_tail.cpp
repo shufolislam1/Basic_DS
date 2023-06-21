@@ -51,7 +51,8 @@ int main()
         cin>>val;
         insert_at_tail(head, val);
 
-    }
+    }else if(op == 2){
     print(head);
+    }
     return 0;
 }
