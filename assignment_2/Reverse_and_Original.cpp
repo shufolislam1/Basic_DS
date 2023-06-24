@@ -11,18 +11,7 @@ public:
         this->next = NULL;
     }
 };
-// int count(Node *&head)
-// {
 
-//     int count = 0;
-//     Node *tmp = head;
-//     while (tmp != NULL)
-//     {
-//         count++;
-//         tmp = tmp->next;
-//     }
-//     return count;
-// }
 void print_rrecursion(Node* n){
     if(n == NULL) return;
     print_rrecursion(n->next);

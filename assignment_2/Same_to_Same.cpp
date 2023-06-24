@@ -47,6 +47,7 @@ void same_checker(Node *head1, Node *head2)
         if (head1->val == head2->val && (one == two))
         {
             flag = true;
+            break;
         }
         head1 = head1->next;
         head2 = head2->next;
