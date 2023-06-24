@@ -17,7 +17,7 @@ int count(Node *&head)
 
     int count = 0;
     Node *tmp = head;
-    while (tmp->next != NULL)
+    while (tmp!= NULL)
     {
         count++;
         tmp = tmp->next;
@@ -44,7 +44,7 @@ void same_checker(Node *head1, Node *head2)
     bool flag = false;
     while (head1 != NULL && head2 != NULL)
     {
-        if (head1->val == head2->val)
+        if (head1->val == head2->val && (one == two))
         {
             flag = true;
         }
@@ -52,7 +52,7 @@ void same_checker(Node *head1, Node *head2)
         head2 = head2->next;
     }
 
-    if (flag == true && (one == two))
+    if (flag == true)
         cout << "YES" << endl;
     else
         cout << "NO" << endl;

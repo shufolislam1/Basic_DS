@@ -47,32 +47,31 @@ void descending_middle(Node *head)
             }
         }
     }
-    int nodeCount = count(head);
-    int middleIndex = nodeCount / 2;
-    if (nodeCount % 2 != 0)
+    int node_Count = count(head);
+    int mid_Index = node_Count / 2;
+    if (node_Count % 2 != 0)
     {
-        // Odd number of nodes, print the middle element
-        Node *middleNode = head;
-        for (int i = 0; i < middleIndex; i++)
+
+        Node *middle_Node = head;
+        for (int i = 0; i < mid_Index; i++)
         {
-            middleNode = middleNode->next;
+            middle_Node = middle_Node->next;
         }
-        cout << middleNode->val << endl;
+        cout << middle_Node->val << endl;
     }
     else
     {
-        // Even number of nodes, print the middle two elements
-        Node *middleNode1 = head;
-        Node *middleNode2 = head;
-        for (int i = 0; i < middleIndex - 1; i++)
+        Node *middle_Node1 = head;
+        Node *middle_Node2 = head;
+        for (int i = 0; i < mid_Index - 1; i++)
         {
-            middleNode2 = middleNode2->next;
+            middle_Node2 = middle_Node2->next;
         }
-        for (int i = 0; i < middleIndex; i++)
+        for (int i = 0; i < mid_Index; i++)
         {
-            middleNode1 = middleNode1->next;
+            middle_Node1 = middle_Node1->next;
         }
-        cout << middleNode2->val << " " << middleNode1->val << endl;
+        cout << middle_Node2->val << " " << middle_Node1->val << endl;
     }
 }
 int main()
