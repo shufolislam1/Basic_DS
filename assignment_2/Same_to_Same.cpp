@@ -11,72 +11,60 @@ public:
         this->next = NULL;
     }
 };
-void insert(Node *&head, int val)
+// etar complexity besi loop thakar karron e
+int count(Node *&head)
+{
+
+    int count = 0;
+    Node *tmp = head;
+    while (tmp->next != NULL)
+    {
+        count++;
+        tmp = tmp->next;
+    }
+    return count;
+}
+
+void inserrt_at_tail(Node *&head, Node *&tail, int val)
 {
     Node *newNode = new Node(val);
     if (head == NULL)
     {
         head = newNode;
+        tail = newNode;
         return;
     }
-
-    Node *tmp = head;
-    while (tmp->next != NULL)
-    {
-        tmp = tmp->next;
-    }
-    tmp->next = newNode;
+    tail->next = newNode;
+    tail = newNode;
 }
-void insert2(Node *&head, int val)
+void same_checker(Node *head1, Node *head2)
 {
-    Node *newNode = new Node(val);
-    if (head == NULL)
+    int one = count(head1);
+    int two = count(head2);
+    bool flag = false;
+    while (head1 != NULL && head2 != NULL)
     {
-        head = newNode;
-        return;
+        if (head1->val == head2->val)
+        {
+            flag = true;
+        }
+        head1 = head1->next;
+        head2 = head2->next;
     }
 
-    Node *tmp = head;
-    while (tmp->next != NULL)
-    {
-        tmp = tmp->next;
-    }
-    tmp->next = newNode;
+    if (flag == true && (one == two))
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
 }
-void same_checker(Node *head)
-{
-}
-// void print_MinNode(Node *head)
-// {
-//     Node *tmp = head;
-//     int min = INT_MAX;
-//     while (tmp != NULL)
-//     {
-//         if (tmp->val < min)
-//         {
-//             min = tmp->val;
-//         }
-//         tmp = tmp->next;
-//     }
-//     cout << min << " ";
-// }
-// void print_MaxNode(Node *head)
-// {
-//     Node *tmp = head;
-//     int max = INT_MIN;
-//     while (tmp != NULL)
-//     {
-//         if (tmp->val > max)
-//         {
-//             max = tmp->val;
-//         }
-//         tmp = tmp->next;
-//     }
-//     cout << max << " ";
-// }
 int main()
 {
-    Node *head = NULL;
+    Node *head1 = NULL;
+    Node *tail1 = NULL;
+
+    Node *head2 = NULL;
+    Node *tail2 = NULL;
+
     while (true)
     {
         int val;
@@ -85,25 +73,20 @@ int main()
             break;
         else
         {
-            insert(head, val);
-            insert2(head, val);
+            inserrt_at_tail(head1, tail1, val);
         }
     }
-    bool flag = false;
-
-    for (Node *i = head; i->next != NULL; i = i->next)
+    while (true)
     {
-        for (Node *j = i->next; j != NULL; j = j->next)
+        int val;
+        cin >> val;
+        if (val == -1)
+            break;
+        else
         {
-            if (i->val == j->val)
-            {
-                flag = true;
-            }
+            inserrt_at_tail(head2, tail2, val);
         }
     }
-    if (flag == true)
-        cout << "YES" << endl;
-    else
-        cout << "NO" << endl;
+    same_checker(head1, head2);
     return 0;
 }
