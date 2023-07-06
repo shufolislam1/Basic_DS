@@ -13,32 +13,82 @@ public:
         this->pre = NULL;
     }
 };
-void print_normal(Node* head){
-    Node* tmp = head;
-    while(tmp!= NULL){
-        cout<<tmp->val<<" ";
+void print_normal(Node *head)
+{
+    Node *tmp = head;
+    cout<<"L -> ";
+    while (tmp != NULL)
+    {
+        cout << tmp->val << " ";
         tmp = tmp->next;
     }
-    cout<<endl;
+    cout << endl;
 }
-void print_reverse(Node* tail){
-    Node* tmp = tail;
-    while(tmp!= NULL){
-        cout<<tmp->val<<" ";
+void print_reverse(Node *tail)
+{
+    Node *tmp = tail;
+    cout<<"R -> ";
+    while (tmp != NULL)
+    {
+        cout << tmp->val << " ";
         tmp = tmp->pre;
     }
-    cout<<endl;
+    cout << endl;
 }
-void insert_at_any_pos(Node* head, int pos, int val){
-    Node* newnode = new Node(val);
-    Node* tmp = head;
-    while(tmp!= NULL){
-        newnode->next = tmp->next;
-        tmp->next = newnode;
-        newnode->next->pre = newnode;
-        newnode->pre =  tmp;
+void insert_at_head(Node *&head, Node *&tail, int val)
+{
+    Node *newNode = new Node(val);
+    if (head == NULL)
+    {
+        head = newNode;
+        tail = newNode;
+        return;
     }
+    newNode->next = head;
+    head->pre = newNode;
+    head = newNode;
+
 }
+void insert_at_tail(Node *&head, Node *&tail, int val)
+{
+    Node *newNode = new Node(val);
+    if (head == NULL)
+    {
+        head = newNode;
+        tail = newNode;
+        return;
+    }
+    tail->next = newNode;
+    newNode->pre = tail;
+    tail = tail->next;
+
+}
+int size_count(Node *head)
+{
+    Node *tmp = head;
+    int cnt = 0;
+    while (tmp != NULL)
+    {
+        cnt++;
+        tmp = tmp->next;
+    }
+    return cnt;
+}
+
+void insert_at_any_pos(Node *head, int pos, int val)
+{
+    Node *newnode = new Node(val);
+    Node *tmp = head;
+    for (int i = 1; i <= pos - 1; i++)
+    {
+        tmp = tmp->next;
+    }
+    newnode->next = tmp->next;
+    tmp->next = newnode;
+    newnode->next->pre = newnode;
+    newnode->pre = tmp;
+}
+
 int main()
 {
     Node *head = NULL;
@@ -51,13 +101,27 @@ int main()
         cin >> x >> v;
         if (x == 0)
         {
-            // insert_at_head(head, tail, v);
-            // print_head_tail(head, tail); 
-        }
-        else if (x == 1)
-        {
-            // inserrt_at_tail(head, tail, v);
+            insert_at_head(head, tail, v);
+            print_normal(head);
+            print_reverse(tail);
             // print_head_tail(head, tail);
+        }
+        else if (x == size_count(head))
+        {
+            insert_at_tail(head, tail, v);
+            print_normal(head);
+            print_reverse(tail);
+        }
+        else if (x > size_count(head))
+        {
+            cout << "Invalid" << endl;
+            
+        }
+        else
+        {
+            insert_at_any_pos(head, x, v);
+            print_normal(head);
+            print_reverse(tail);
         }
     }
 
