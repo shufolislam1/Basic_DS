@@ -1,120 +1,148 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
-class Node {
+class Node
+{
 public:
     int val;
-    Node* next;
-    Node(int val) {
+    Node *next;
+    Node(int val)
+    {
         this->val = val;
         this->next = NULL;
     }
 };
 
-class stack_class {
+class stack_class
+{
 public:
-    Node* top = NULL;
+    vector<int> v;
 
-    void push(int value) {
-        Node* newNode = new Node(value);
-        newNode->val = value;
-        newNode->next = top;
-        top = newNode;
+    void push(int val)
+    {
+        v.push_back(val);
     }
 
-    int pop() {
-        if (isEmpty() == true) {
-            return -1;
-        }
-        int value = top->val;
-        Node* temp = top;
-        top = top->next;
-        delete temp;
-        return value;
+    int top()
+    {
+        return v.back();
     }
 
-    bool isEmpty() {
-        return top == NULL;
+    void pop()
+    {
+        v.pop_back();
+    }
+
+    bool empty()
+    {
+        return v.empty();
     }
 };
 
-class queue_class {
+class queue_class
+{
 public:
-    Node* front = NULL;
-    Node* back = NULL;
+    Node *head = NULL;
+    Node *tail = NULL;
+    int szz = 0;
 
-    void push(int value) {
-        Node* newNode = new Node(value);
-        newNode->val = value;
-        newNode->next = NULL;
-        if (isEmpty()) {
-            front = back = newNode;
-        } else {
-            back->next = newNode;
-            back = newNode;
+    void push(int value)
+    {
+        szz++;
+        Node *newNode = new Node(value);
+        if (head == NULL)
+        {
+            head = newNode;
+            tail = newNode;
+            return;
+        }
+        tail->next = newNode;
+        tail = newNode;
+    }
+
+    int front()
+    {
+        return head->val;
+    }
+
+    void pop()
+    {
+        szz--;
+        Node *deleteNode = head;
+        head = head->next;
+        delete deleteNode;
+        if (head == NULL)
+        {
+            tail = NULL;
         }
     }
 
-    int pop() {
-        if (isEmpty() == true) {
-            return -1;
-        }
-        int value = front->val;
-        Node* temp = front;
-        front = front->next;
-        if (front == NULL) {
-            back = NULL;
-        }
-        delete temp;
-        return value;
-    }
-
-    bool isEmpty() {
-        return front == NULL;
+    bool empty()
+    {
+        return szz == 0;
     }
 };
 
-bool equal_check(int N, int M, int A[], int B[]) {
+bool equal_check(int N, int M, int A[], int B[])
+{
     stack_class stack;
     queue_class queue;
 
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < N; i++)
+    {
         stack.push(A[i]);
     }
 
-    for (int i = 0; i < M; i++) {
+    for (int i = 0; i < M; i++)
+    {
         queue.push(B[i]);
     }
 
-    while (stack.isEmpty() == false && queue.isEmpty() == false) {
-        int stackValue = stack.pop();
-        int queueValue = queue.pop();
-        if (stackValue != queueValue) {
-            return false;
-        }
+    if (stack.empty() != queue.empty())
+    {
+        return false;
     }
 
-    // If both stack and queue are empty, the lists are equal
-    return stack.isEmpty() && queue.isEmpty();
+    while (!stack.empty() && !queue.empty())
+    {
+        int stackValue = stack.top();
+        int queueValue = queue.front();
+
+        if (stackValue != queueValue)
+        {
+            return false;
+        }
+
+        stack.pop();
+        queue.pop();
+    }
+
+    return stack.empty() && queue.empty();
 }
 
-int main() {
+int main()
+{
     int N, M;
     cin >> N >> M;
 
     int A[N];
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < N; i++)
+    {
         cin >> A[i];
     }
 
     int B[M];
-    for (int i = 0; i < M; i++) {
+    for (int i = 0; i < M; i++)
+    {
         cin >> B[i];
     }
 
-    if (equal_check(N, M, A, B)) {
+    if (equal_check(N, M, A, B))
+    {
         cout << "YES" << endl;
-    } else {
+    }
+    else
+    {
         cout << "NO" << endl;
     }
 
